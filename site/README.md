@@ -9,6 +9,7 @@
 | `index.html` | ページ本体（テキスト・リンクはすべてここ） |
 | `style.css` | 配色・レイアウト・アニメーション |
 | `script.js` | 桜の花びらの生成（ランダム配置） |
+| `favicon.ico` | ファビコン（16/32/48を同梱） |
 | `assets/top.png` | OGP画像（1200×630・SNSシェア用） |
 | `assets/icon/` | 画像置き場（トップ画像 `top.webp` ＋ キャラアイコン4人分） |
 
@@ -53,6 +54,38 @@
 - 差し替えるときは `top.webp` を同名で上書きするだけでOK。
   別のファイル名にしたい場合は `index.html` 内を
   「**★トップ画像の差し替え位置★**」で検索して `src` を書き換える
+
+## favicon（ブラウザのタブに出るアイコン）
+
+`assets/icon/kyown_icon.png` を元に、用途ごとのサイズへ縮小して使用中。
+
+| ファイル | サイズ | 用途 |
+| --- | --- | --- |
+| `favicon.ico` | 16/32/48 | ブラウザが `/favicon.ico` を自動で探しに来る分 |
+| `assets/favicon-32.png` | 32×32 | 通常のタブ表示（約2KB） |
+| `assets/favicon-192.png` | 192×192 | Android・ホーム画面に追加したとき |
+| `assets/apple-touch-icon.png` | 180×180 | iOS・ホーム画面に追加したとき |
+
+元画像は1920×1920・約2.9MBあるため、**そのまま `<link rel="icon">` に指定してはいけない**
+（タブに小さく表示するだけのために、毎回2.9MB読み込むことになる）。
+
+### 差し替え方
+
+`assets/icon/kyown_icon.png` を新しい画像で上書きしたあと、次のコマンドで作り直す：
+
+```bash
+python3 -c "
+from PIL import Image
+im = Image.open('site/assets/icon/kyown_icon.png').convert('RGB')
+im.resize((48,48), Image.LANCZOS).save('site/favicon.ico', 'ICO', sizes=[(16,16),(32,32),(48,48)])
+for size, path in [(32,'site/assets/favicon-32.png'), (192,'site/assets/favicon-192.png'), (180,'site/assets/apple-touch-icon.png')]:
+    im.resize((size,size), Image.LANCZOS).save(path, 'PNG', optimize=True)
+"
+```
+
+（Pillow が未インストールなら先に `pip install Pillow`）
+
+反映されないときはブラウザのキャッシュが原因。スーパーリロード（Ctrl/Cmd + Shift + R）で確認する。
 
 ## OGP（SNSでシェアされたときのカード）
 
