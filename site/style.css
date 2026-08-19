@@ -266,14 +266,13 @@ body {
   margin-top: 4px;
 }
 
-/* ホバーの浮き上がり（hoverがある環境だけ） */
+/* ホバーの浮き上がり（hoverがある環境だけ）
+   Links・Characters・Tools のカードはすべて a 要素なので、これ1つで全カードに効く */
 @media (hover: hover) {
-  a.card,
-  .card-kyown {
+  a.card {
     transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
   }
-  a.card:hover,
-  .card-kyown:hover {
+  a.card:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 20px rgba(80, 60, 70, 0.08);  /* ごく淡い影 */
   }
