@@ -22,6 +22,7 @@
   --free-bg: #EAF3DE;      --free-title: #173404;    --free-sub: #3B6D11;
 
   /* Characters カード */
+  --kyown-bg: #FBEAF0;     --kyown-ring: #F4C0D1;    --kyown-title: #4B1528;  --kyown-sub: #993556;
   --mia-bg: #FAEEDA;       --mia-ring: #FAC775;      --mia-title: #412402;    --mia-sub: #854F0B;
   --rain-bg: #EEEDFE;      --rain-ring: #CECBF6;     --rain-title: #26215C;   --rain-sub: #534AB7;
   --shiori-bg: #E6F1FB;    --shiori-ring: #B5D4F4;   --shiori-title: #042C53; --shiori-sub: #185FA5;
@@ -267,10 +268,12 @@ body {
 
 /* ホバーの浮き上がり（hoverがある環境だけ） */
 @media (hover: hover) {
-  a.card {
+  a.card,
+  .card-kyown {
     transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
   }
-  a.card:hover {
+  a.card:hover,
+  .card-kyown:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 20px rgba(80, 60, 70, 0.08);  /* ごく淡い影 */
   }
@@ -317,6 +320,12 @@ body {
   height: 100%;
   object-fit: cover;
 }
+
+/* きょん：1行目で3カラム分をまたぐ */
+.card-kyown  { background: var(--kyown-bg); grid-column: 1 / -1; }
+.card-kyown .char-icon   { border-color: var(--kyown-ring); background: var(--kyown-ring); }
+.card-kyown .card-title  { color: var(--kyown-title); justify-content: center; }
+.card-kyown .card-sub    { color: var(--kyown-sub); }
 
 .card-mia    { background: var(--mia-bg); }
 .card-mia .char-icon   { border-color: var(--mia-ring); background: var(--mia-ring); }
