@@ -57,6 +57,62 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* ---------- ランタンの灯り＋星の瞬き（背景・最背面） ---------- */
+
+/* 桜の花びら（.sakura）と同じ z-index: 0 だが、DOM で先に置いているため
+   花びらより背面に描画される。コンテンツ（.page, z-index: 1）よりも下 */
+.night-sky {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;  /* クリックの邪魔をしない（必須） */
+  z-index: 0;
+}
+
+/* 灯りのゆらぎ：大きさ・位置は HTML の style 属性で個別指定（アニメはさせない）。
+   動かすのは opacity と transform だけ（GPUに優しい） */
+.lantern {
+  position: absolute;
+  border-radius: 50%;
+  background: #F5C77E;
+  filter: blur(60px);
+  opacity: 0.3;   /* prefers-reduced-motion で静止したときの明るさ */
+  animation: lantern-flicker var(--fd, 8s) ease-in-out var(--fdelay, 0s) infinite;
+  will-change: transform, opacity;
+}
+
+/* ロウソクらしく、キーフレームを不均等な位置に置いて不規則にゆらがせる */
+@keyframes lantern-flicker {
+  0%   { opacity: 0.25; transform: scale(1); }
+  23%  { opacity: 0.38; transform: scale(1.05); }
+  47%  { opacity: 0.28; transform: scale(1.01); }
+  68%  { opacity: 0.40; transform: scale(1.08); }
+  100% { opacity: 0.25; transform: scale(1); }
+}
+
+/* 星の瞬き：ごく小さな白い点。気配程度に留める */
+.star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #F2EDF5;
+  opacity: 0.35;  /* prefers-reduced-motion で静止したときの明るさ */
+  animation: star-twinkle var(--td, 3s) ease-in-out var(--tdelay, 0s) infinite alternate;
+}
+
+@keyframes star-twinkle {
+  from { opacity: 0.12; }
+  to   { opacity: 0.55; }
+}
+
+/* スマホでは灯りを3個に減らす（GPU負荷とにじみの重なりを抑える） */
+@media (max-width: 600px) {
+  .lantern-extra {
+    display: none;
+  }
+}
+
 /* ---------- 桜の花びら（背景） ---------- */
 
 .sakura {
@@ -107,10 +163,14 @@ body {
   to   { transform: rotate(360deg); }
 }
 
-/* アクセシビリティ：動きを減らす設定のときは花びらを止める */
+/* アクセシビリティ：動きを減らす設定のときは花びらを止め、灯りと星は静止表示にする */
 @media (prefers-reduced-motion: reduce) {
   .sakura {
     display: none;
+  }
+  .lantern,
+  .star {
+    animation: none;  /* 要素自体は残し、基準の opacity で静止させる */
   }
   html {
     scroll-behavior: auto;
