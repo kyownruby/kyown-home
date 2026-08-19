@@ -18,18 +18,22 @@
   <div class="page">
 
     <!-- ==================================================
-         ▼▼▼ 差し替えテキストまとめ ▼▼▼
-         きょんが最終的に埋めるテキストは、すべて
-         「★仮」コメントの直後の行にあります。
-         このファイル内で「★仮」を検索すると全部見つかります。
+         ▼▼▼ 差し替えポイント ▼▼▼
+         ・テキスト … 「肩書き」「About」「フッターの一言」の
+                      各コメント直後の行を書き換える
+         ・トップ画像 … 「★トップ画像の差し替え位置★」を検索
+         ・キャラアイコン … assets/icon/ の画像を同名で上書き
          ================================================== -->
 
     <!-- 1. ヒーロー ======================================= -->
     <header class="hero">
       <div class="hero-icon">
-        <!-- キャラ/アイコン画像を入れる場合：
-             assets/ フォルダに画像を置いて、下の span を
-             <img src="assets/icon.png" alt=""> に差し替える -->
+        <!-- ★トップ画像の差し替え位置★
+             あとで別のトップ画像に差し替える予定。
+             画像を site/assets/ に置いて、下の <span> の行を
+             まるごと次の1行に置き換えるだけでOK：
+             <img src="assets/トップ画像のファイル名.png" alt="">
+             （枠は正円・object-fit: cover なので正方形の画像がきれい） -->
         <span class="hero-icon-flower">🌸</span>
       </div>
       <h1 class="hero-name">きょん</h1>
@@ -87,25 +91,33 @@
       <section class="section" id="characters">
         <h2 class="section-heading">characters</h2>
         <div class="grid grid-characters">
+          <!-- 1行目：きょん（3カラム分をまたいで横幅いっぱい） -->
+          <div class="card card-kyown">
+            <div class="char-icon">
+              <img src="assets/icon/kyown_icon.png" alt="きょん" loading="lazy" decoding="async">
+            </div>
+            <h3 class="card-title">きょん</h3>
+            <p class="card-sub">ゲーマー兼エンジニア</p>
+          </div>
+
+          <!-- 2行目：ミア・レイン・しおり（3カラム） -->
           <div class="card card-mia">
             <div class="char-icon">
-              <!-- キャラ画像を入れる場合：
-                   assets/ に画像を置いて、この div の中に
-                   <img src="assets/mia.png" alt="ミア"> を追加する -->
+              <img src="assets/icon/mia_icon.png" alt="ミア" loading="lazy" decoding="async">
             </div>
             <h3 class="card-title">ミア</h3>
             <p class="card-sub">甘えん坊の猫耳メイド</p>
           </div>
           <div class="card card-rain">
             <div class="char-icon">
-              <!-- <img src="assets/rain.png" alt="レイン"> -->
+              <img src="assets/icon/rain_icon.png" alt="レイン" loading="lazy" decoding="async">
             </div>
             <h3 class="card-title">レイン</h3>
             <p class="card-sub">ツンデレ幼なじみ</p>
           </div>
           <div class="card card-shiori">
             <div class="char-icon">
-              <!-- <img src="assets/shiori.png" alt="しおり"> -->
+              <img src="assets/icon/shiori_icon.png" alt="しおり" loading="lazy" decoding="async">
             </div>
             <h3 class="card-title">しおり</h3>
             <p class="card-sub">内気な創作仲間</p>
