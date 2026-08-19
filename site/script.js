@@ -15,7 +15,7 @@
   }
 
   var PETAL_COUNT = 7; // 5〜8枚程度に抑える（増やしすぎると重い＆読みにくい）
-  var COLORS = ["#FBEAF0", "#F4C0D1", "#ED93B1"];
+  var COLORS = ["#F4C0D1", "#F4C0D1", "#ED93B1"]; // 暗い背景向けに濃いめのピンク寄り
 
   function rand(min, max) {
     return min + Math.random() * (max - min);
