@@ -9,6 +9,7 @@
 | `index.html` | ページ本体（テキスト・リンクはすべてここ） |
 | `style.css` | 配色・レイアウト・アニメーション |
 | `script.js` | 桜の花びらの生成（ランダム配置） |
+| `assets/top.png` | OGP画像（1200×630・SNSシェア用） |
 | `assets/icon/` | 画像置き場（トップ画像 `top.webp` ＋ キャラアイコン4人分） |
 
 ## テキストの差し替え方
@@ -52,6 +53,44 @@
 - 差し替えるときは `top.webp` を同名で上書きするだけでOK。
   別のファイル名にしたい場合は `index.html` 内を
   「**★トップ画像の差し替え位置★**」で検索して `src` を書き換える
+
+## OGP（SNSでシェアされたときのカード）
+
+`index.html` の `<head>` に OGP / Twitter Card のメタタグを設定済み。
+
+| 項目 | 値 |
+| --- | --- |
+| タイトル | きょん(るびぃ) \| kyownruby |
+| 説明 | note・イラスト・自作ツールはこちらから。 |
+| 画像 | `https://kyownruby.pages.dev/assets/top.png` |
+| URL | `https://kyownruby.pages.dev/` |
+| カード形式 | `summary_large_image`（大きい画像付き） |
+
+### OGP画像（`assets/top.png`）について
+
+- `assets/icon/top.webp` を **1200×630px**（OGP標準サイズ）に中央寄せで切り出したもの
+- **WebPを表示できないSNSがあるため、あえてPNGにしている**
+- トップ画像を差し替えたら、この画像も作り直すこと：
+
+```bash
+python3 -c "
+from PIL import Image
+im = Image.open('site/assets/icon/top.webp').convert('RGB')
+sw, sh = im.size
+scale = max(1200/sw, 630/sh)
+nw, nh = round(sw*scale), round(sh*scale)
+r = im.resize((nw, nh), Image.LANCZOS)
+r.crop(((nw-1200)//2, (nh-630)//2, (nw-1200)//2+1200, (nh-630)//2+630)).save('site/assets/top.png', 'PNG', optimize=True)
+"
+```
+
+### 注意
+
+- `og:image` は**絶対URL**（`https://` から始まる形）でないとSNS側が読み取れない
+- 独自ドメインに変更した場合は、`og:image` / `og:url` / `twitter:image` の3か所のURLも書き換える
+- 反映されないときはSNS側のキャッシュが原因。
+  X は [Card Validator](https://cards-dev.twitter.com/validator)、
+  Facebook は [Sharing Debugger](https://developers.facebook.com/tools/debug/) で再取得できる
 
 ## Cloudflare Pages でのデプロイ手順
 
