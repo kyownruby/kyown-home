@@ -153,13 +153,16 @@ body {
 
 /* トップ画像（16:9の横長バナー） */
 .hero-top {
-  width: 100%;
-  max-width: 720px;
+  /* ヒーローの左右パディング（24px）を打ち消して、画面の端から端まで広げる */
+  align-self: stretch;
+  margin: 0 -24px 28px;
   aspect-ratio: 16 / 9;
-  border-radius: var(--radius);  /* カードと同じ角丸 */
+  /* 画面が横に広いとき、16:9のままだと名前や肩書きが画面外に落ちるため
+     高さに上限をつけ、object-fit: cover で上下だけトリミングする */
+  max-height: 58vh;
+  max-height: 58svh;   /* svh 非対応ブラウザは上の vh にフォールバック */
   background: var(--hero-icon-bg);
   overflow: hidden;
-  margin-bottom: 28px;
 }
 
 .hero-top img {
@@ -167,6 +170,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 42%;  /* 上下を切るときに顔が残るよう、やや上寄り */
 }
 
 .hero-name {
