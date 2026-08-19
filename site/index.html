@@ -21,20 +21,19 @@
          ▼▼▼ 差し替えポイント ▼▼▼
          ・テキスト … 「肩書き」「About」「フッターの一言」の
                       各コメント直後の行を書き換える
-         ・トップ画像 … 「★トップ画像の差し替え位置★」を検索
+         ・トップ画像 … assets/icon/top.webp を同名で上書き
+                        （「★トップ画像の差し替え位置★」を検索）
          ・キャラアイコン … assets/icon/ の画像を同名で上書き
          ================================================== -->
 
     <!-- 1. ヒーロー ======================================= -->
     <header class="hero">
-      <div class="hero-icon">
-        <!-- ★トップ画像の差し替え位置★
-             あとで別のトップ画像に差し替える予定。
-             画像を site/assets/ に置いて、下の <span> の行を
-             まるごと次の1行に置き換えるだけでOK：
-             <img src="assets/トップ画像のファイル名.png" alt="">
-             （枠は正円・object-fit: cover なので正方形の画像がきれい） -->
-        <span class="hero-icon-flower">🌸</span>
+      <!-- ★トップ画像の差し替え位置★
+           差し替えるときは assets/icon/top.webp を同名で上書きするか、
+           下の src を新しいファイル名に変えるだけでOK。
+           枠は 16:9・object-fit: cover なので横長の画像がきれい。 -->
+      <div class="hero-top">
+        <img src="assets/icon/top.webp" alt="きょん・ミア・レイン・しおり" fetchpriority="high" decoding="async">
       </div>
       <h1 class="hero-name">きょん</h1>
       <p class="hero-id">@kyownruby</p>
