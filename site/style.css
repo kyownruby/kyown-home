@@ -1,18 +1,21 @@
 /* ==========================================================
    きょんの入口ページ スタイル
-   コンセプト：「桜が散るデスクトップ」
-   ベースは白〜淡いピンクグレーのみ。色はカードの中だけで使う。
+   コンセプト：「桜が散るデスクトップ」（夜・ランタン・星空）
+   ベースは夜色（濃い紫紺）のみ。カードの色は昼のまま、灯りのように浮かべる。
    ========================================================== */
 
 :root {
-  /* ベース */
-  --bg: #FCFAFB;            /* 白〜ごく淡いピンクグレー */
-  --text: #3A373B;          /* 本文：濃いグレー */
-  --text-soft: #8A8489;     /* 補足テキスト */
+  /* ベース（トップ画像の夜空に合わせた夜色） */
+  --bg: #16131F;            /* ページ全体の背景 */
+  --surface: #1E1A2A;       /* セクションの下地（画像読み込み前の枠など） */
+  --text: #F2EDF5;          /* 本文・見出し（カードの外のみ） */
+  --text-soft: #B0A6BE;     /* 肩書き・About・フッターなど補助テキスト */
+  --heading-mono: #8E84A0;  /* セクション見出しの等幅小文字 */
+  --border: #2E2A3C;        /* 区切り線・ボーダー用 */
   --radius: 12px;           /* カードの角丸（統一） */
 
   /* ヒーローのトップ画像枠（読み込み前の下地色） */
-  --hero-icon-bg: #FBEAF0;
+  --hero-icon-bg: var(--surface);
 
   /* Links カード */
   --note-bg: #FBEAF0;      --note-title: #4B1528;    --note-sub: #993556;
@@ -84,6 +87,8 @@ body {
   background: var(--petal-color, #F4C0D1);
   border-radius: 150% 0 150% 0;
   opacity: 0.8;
+  /* 暗い背景でも見えるよう、ごく弱い発光でにじませる */
+  filter: drop-shadow(0 0 5px rgba(244, 192, 209, 0.45));
   animation: petal-spin var(--spin-duration, 6s) linear infinite;
 }
 
@@ -133,7 +138,7 @@ body {
   font-size: 0.85rem;
   font-weight: 400;
   letter-spacing: 0.08em;
-  color: var(--text-soft);
+  color: var(--heading-mono);
   margin-bottom: 28px;
 }
 
@@ -271,7 +276,8 @@ body {
   }
   a.card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(80, 60, 70, 0.08);  /* ごく淡い影 */
+    /* 影の代わりに、うっすら灯りがともる程度のグロー（#F5C77E） */
+    box-shadow: 0 0 20px 2px rgba(245, 199, 126, 0.16);
   }
 }
 
