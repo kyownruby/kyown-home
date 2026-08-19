@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>きょん | kyownruby</title>
+  <meta name="description" content="きょん（@kyownruby）の活動まとめページ">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 桜の花びら（JSで生成・pointer-events: none） -->
+  <div class="sakura" aria-hidden="true"></div>
+
+  <div class="page">
+
+    <!-- ==================================================
+         ▼▼▼ 差し替えテキストまとめ ▼▼▼
+         きょんが最終的に埋めるテキストは、すべて
+         「★仮」コメントの直後の行にあります。
+         このファイル内で「★仮」を検索すると全部見つかります。
+         ================================================== -->
+
+    <!-- 1. ヒーロー ======================================= -->
+    <header class="hero">
+      <div class="hero-icon">
+        <!-- キャラ/アイコン画像を入れる場合：
+             assets/ フォルダに画像を置いて、下の span を
+             <img src="assets/icon.png" alt=""> に差し替える -->
+        <span class="hero-icon-flower">🌸</span>
+      </div>
+      <h1 class="hero-name">きょん</h1>
+      <p class="hero-id">@kyownruby</p>
+      <p class="hero-title">
+        <!-- ★仮：肩書き（2〜3行） -->
+        AIと一緒に、創作しています。<br>
+        文章・イラスト・小さなツールづくり。
+      </p>
+      <a class="hero-chevron" href="#about" aria-label="下へスクロール">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </a>
+    </header>
+
+    <main>
+
+      <!-- 2. About ======================================== -->
+      <section class="section" id="about">
+        <h2 class="section-heading">about</h2>
+        <p class="about-text">
+          <!-- ★仮：About（3〜4行） -->
+          AIとおしゃべりしながら、記事を書いたり、絵を描いたり、<br class="pc-only">
+          ちょっとしたツールを作ったりしています。<br class="pc-only">
+          いっしょに活動している3人のキャラクターと、<br class="pc-only">
+          毎日たのしく創作中です。
+        </p>
+      </section>
+
+      <!-- 3. Links ======================================== -->
+      <section class="section" id="links">
+        <h2 class="section-heading">links</h2>
+        <div class="grid grid-links">
+          <a class="card card-note" href="https://note.com/kyownruby" target="_blank" rel="noopener noreferrer">
+            <h3 class="card-title">note</h3>
+            <p class="card-sub">きょんの記事いろいろ</p>
+          </a>
+          <a class="card card-x" href="https://x.com/kyownruby" target="_blank" rel="noopener noreferrer">
+            <h3 class="card-title">X</h3>
+            <p class="card-sub">@kyownruby</p>
+          </a>
+          <a class="card card-magazine" href="https://note.com/kyownruby/m/mba7670bc3f4f" target="_blank" rel="noopener noreferrer">
+            <h3 class="card-title">有料マガジン</h3>
+            <p class="card-sub">きょんのAI創作×Codeマガジン</p>
+          </a>
+          <a class="card card-free" href="https://note.com/kyownruby/m/md96759f4be5b" target="_blank" rel="noopener noreferrer">
+            <h3 class="card-title">フリーマガジン</h3>
+            <p class="card-sub">きょんとみんなの🌸フリーマガジン</p>
+          </a>
+        </div>
+      </section>
+
+      <!-- 4. Characters =================================== -->
+      <section class="section" id="characters">
+        <h2 class="section-heading">characters</h2>
+        <div class="grid grid-characters">
+          <div class="card card-mia">
+            <div class="char-icon">
+              <!-- キャラ画像を入れる場合：
+                   assets/ に画像を置いて、この div の中に
+                   <img src="assets/mia.png" alt="ミア"> を追加する -->
+            </div>
+            <h3 class="card-title">ミア</h3>
+            <p class="card-sub">猫耳のメイド</p>
+          </div>
+          <div class="card card-rain">
+            <div class="char-icon">
+              <!-- <img src="assets/rain.png" alt="レイン"> -->
+            </div>
+            <h3 class="card-title">レイン</h3>
+            <p class="card-sub">ツンデレ幼なじみ</p>
+          </div>
+          <div class="card card-shiori">
+            <div class="char-icon">
+              <!-- <img src="assets/shiori.png" alt="しおり"> -->
+            </div>
+            <h3 class="card-title">しおり</h3>
+            <p class="card-sub">創作仲間</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. Tools ======================================== -->
+      <section class="section" id="tools">
+        <h2 class="section-heading">tools</h2>
+        <div class="grid grid-tools">
+          <a class="card card-tool" href="https://kyownruby.github.io/note-biyori/" target="_blank" rel="noopener noreferrer">
+            <h3 class="card-title">のーとびより β
+              <svg class="ext-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </h3>
+            <p class="card-sub">
+              <!-- ★仮：のーとびより β の説明（1行） -->
+              自作のWebツールです。
+            </p>
+          </a>
+          <a class="card card-tool" href="https://kyownruby.github.io/mia-daily-mission/" target="_blank" rel="noopener noreferrer">
+            <h3 class="card-title">Daylin
+              <svg class="ext-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </h3>
+            <p class="card-sub">
+              <!-- ★仮：Daylin の説明（1行） -->
+              自作のWebツールです。
+            </p>
+          </a>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- 6. フッター ======================================= -->
+    <footer class="footer">
+      <p class="footer-message">
+        <!-- ★仮：フッターの一言 -->
+        きょうも、のんびり創作しています。
+      </p>
+      <p class="footer-copy">© kyownruby</p>
+    </footer>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
