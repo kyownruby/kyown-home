@@ -59,10 +59,8 @@
     });
   });
 
-  // 背景（画像の外側）クリックで閉じる。画像自体のクリックでは閉じない
-  lightbox.addEventListener("click", function (e) {
-    if (e.target !== lightboxImg) close();
-  });
+  // どこをクリックしても閉じる（画像の上も含む。もう一度クリックでギャラリーに戻れる）
+  lightbox.addEventListener("click", close);
 
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape" && !lightbox.hidden) close();
