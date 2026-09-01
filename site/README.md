@@ -40,21 +40,52 @@
 トップの gallery セクション（4枚の16:9カード）と、キャラ別ページ
 （`gallery/kyown.html` / `mia.html` / `rain.html` / `shiori.html`）で構成。
 
-### 画像の置き場所
+### 画像の追加方法（自動振り分け）
+
+1. `site/assets/gallery/_upload/` に「**キャラ名_タイトル.拡張子**」形式で画像を置く
+   （例：`mia_おひるね.png` → ミアのギャラリーに「おひるね」として追加される）
+2. リポジトリのルートで実行：
+
+```bash
+npm install   # 初回のみ
+npm run gallery
+```
+
+3. 変更されたファイルをコミットする
+
+スクリプト（`scripts/build-gallery.mjs`）がやること：
+
+- プレフィックス（`kyown_` / `mia_` / `rain_` / `shiori_`）でキャラフォルダへ振り分け
+  - どれにも一致しない場合は**移動せず警告を出して `_upload` に残す**
+- 原寸ファイルを無圧縮コピー（ライトボックス表示用）＋幅800pxのWebPサムネを `thumb/` に生成
+- 各キャラフォルダの `gallery.json` を追記型で更新（date の新しい順。同名ファイルの再アップは上書き）
+- `gallery.json` をもとに `gallery/○○.html` を再生成（**このHTMLは直接編集しない**）
+- 処理が終わった画像を `_upload` から削除
+
+### フォルダ構成
 
 ```
 assets/gallery/
+├── _upload/              ← 一時置き場（.gitignore で無視しない。追跡必須）
 ├── kyown/
-│   ├── cover.webp        ← トップ表示用（16:9・幅1600px程度に軽量化）
-│   └── cover_full.png    ← キャラ別ページ用（元画像そのまま・無圧縮）
-├── mia/
-├── rain/
-└── shiori/   ※ 4フォルダとも同じ構成
+│   ├── cover.webp        ← トップ表示用（16:9・幅1600px。従来どおり手動管理）
+│   ├── cover_full.png    ← 旧・1枚表示用（現在はページから未参照）
+│   ├── gallery.json      ← ページ生成のもとになる画像リスト
+│   ├── kyown_○○.png      ← 原寸画像
+│   └── thumb/○○.webp     ← 一覧表示用サムネ
+├── mia/ ├── rain/ └── shiori/   ※ 同じ構成
 ```
 
-現在はプレースホルダー画像が入っている。**同じファイル名で上書きするだけ**で差し替え完了。
+### キャラ別ページの表示
 
-- `cover.webp` は元画像から**幅1600px程度**に縮小して生成する（トップの表示速度優先）。例：
+- CSS Grid のメイソンリー（Pinterest風）。列数はPC 3列／タブレット2列／スマホ1列が目安
+- 行スパンはビルド時にインライン指定し、実際の列幅に合わせた補正を `gallery/gallery.js` が行う
+- サムネクリックで原寸画像をライトボックス表示（Esc・背景クリックで閉じる。自前実装）
+- 画像が0枚のキャラは「準備中」の表示になる
+
+### トップの cover.webp を差し替えるとき
+
+トップの4枚は自動化の対象外（従来どおり同名上書き）。幅1600pxのWebP生成例：
 
 ```bash
 python3 -c "
@@ -64,17 +95,6 @@ w, h = im.size
 im.resize((1600, round(h*1600/w)), Image.LANCZOS).save('site/assets/gallery/kyown/cover.webp', 'WEBP', quality=80)
 "
 ```
-
-- `cover_full.png` は元画像をそのまま配置する（圧縮しない）
-- 表示枠は両方とも 16:9 固定（`object-fit: cover`）なので、比率の違う画像でもレイアウトは崩れない
-
-### キャラ別ページに画像を追加するとき
-
-1. `assets/gallery/○○/` に画像ファイルを置く
-2. `gallery/○○.html` 内の `<a class="gallery-item">` の行をコピーして、
-   `href`（クリックで開く原寸画像）と `src`（一覧に表示する画像）を新しいファイル名に変えて1行足す
-
-ページ内にも同じ手順をコメントで書いてある。
 
 ## 画像
 
