@@ -1,0 +1,2 @@
+# Node（build-gallery 用）。site/assets/gallery/_upload/ は一時置き場だが追跡が必要なので、ここでは絶対に無視しない
+node_modules/
