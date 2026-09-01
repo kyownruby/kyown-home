@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>レインのギャラリー | kyownruby</title>
+  <meta name="description" content="レインのイラストギャラリー。">
+
+  <link rel="icon" href="../favicon.ico" sizes="32x32">
+  <link rel="icon" href="../assets/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="../assets/favicon-192.png" type="image/png" sizes="192x192">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <!-- ランタンの灯り＋星の瞬き（トップページの縮小版・CSSのみ） -->
+  <div class="night-sky" aria-hidden="true">
+    <span class="lantern" style="left: -70px;  top: 8%;  width: 240px; height: 240px; --fd: 7.3s; --fdelay: 0s;"></span>
+    <span class="lantern" style="right: -80px; top: 45%; width: 280px; height: 280px; --fd: 9.1s; --fdelay: -3.4s;"></span>
+    <span class="lantern" style="left: -60px;  top: 78%; width: 220px; height: 220px; --fd: 6.2s; --fdelay: -1.8s;"></span>
+    <span class="star" style="left: 12%; top: 6%;  --td: 3.1s; --tdelay: 0s;"></span>
+    <span class="star" style="left: 34%; top: 12%; --td: 2.4s; --tdelay: -0.9s;"></span>
+    <span class="star" style="left: 55%; top: 5%;  --td: 3.8s; --tdelay: -2.2s;"></span>
+    <span class="star" style="left: 72%; top: 14%; --td: 2.8s; --tdelay: -1.4s;"></span>
+    <span class="star" style="left: 89%; top: 8%;  --td: 3.4s; --tdelay: -0.5s;"></span>
+  </div>
+
+  <!-- 桜の花びら（JSで生成・pointer-events: none） -->
+  <div class="sakura" aria-hidden="true"></div>
+
+  <div class="page">
+
+    <!-- ヘッダー：トップへ戻る＋キャラ名 -->
+    <header class="section gallery-header">
+      <a class="back-link" href="../index.html">← トップへ戻る</a>
+      <h1 class="gallery-title">レインのギャラリー</h1>
+    </header>
+
+    <main>
+      <section class="section">
+        <!-- ==================================================
+             画像の追加方法：
+             1. assets/gallery/rain/ に画像ファイルを置く
+             2. 下の <a class="gallery-item"> の行をコピーして、
+                href と src を新しいファイル名に変えて1行足す
+             （href … クリックで開く原寸画像 / src … 一覧に表示する画像）
+             ================================================== -->
+        <div class="gallery-list">
+          <a class="gallery-item" href="../assets/gallery/rain/cover_full.png" target="_blank" rel="noopener noreferrer">
+            <img src="../assets/gallery/rain/cover_full.png" alt="レイン" loading="lazy" decoding="async">
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <!-- フッター（トップページと共通） -->
+    <footer class="footer">
+      <p class="footer-message">
+        今日もまた、なんか作ってます。
+      </p>
+      <p class="footer-copy">© kyownruby</p>
+    </footer>
+
+  </div>
+
+  <script src="../script.js"></script>
+</body>
+</html>
