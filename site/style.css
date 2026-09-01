@@ -487,22 +487,24 @@ body {
   display: none;
 }
 
-/* 原寸表示：画面より大きい画像はスクロールで見る。
-   flex＋margin:auto で「小さければ中央寄せ・大きければスクロール」を両立 */
 .lightbox {
   position: fixed;
   inset: 0;
   z-index: 10;
   display: flex;
-  overflow: auto;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
   background: rgba(10, 8, 16, 0.88);
   cursor: zoom-out;
 }
 
-/* 原寸のまま・角丸なしで表示する（縮小も拡大もしない） */
+/* 画面サイズに収まるよう自動で縮小して表示する。
+   拡大はしない（max-* は縮める方向にしか働かないので、小さい画像は原寸のまま）。角丸なし */
 .lightbox img {
   display: block;
-  margin: auto;
+  max-width: 100%;
+  max-height: 100%;
   border-radius: 0;
 }
 
