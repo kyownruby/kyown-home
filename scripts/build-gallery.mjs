@@ -141,11 +141,14 @@ function renderCards(list, charName) {
   return list
     .map((e) => {
       const alt = escapeHtml(`${charName}「${e.title}」`);
-      // featured はグリッド全幅で大きく表示するメイン画像（gallery.json で "featured": true を付ける）
+      // featured はグリッド全幅で大きく表示するメイン画像（gallery.json で "featured": true を付ける）。
+      // 画質を落とさないよう、サムネではなく原寸ファイルをそのまま表示する（ページ先頭なので lazy も付けない）
       const cls = e.featured ? "gallery-item gallery-item-featured" : "gallery-item";
       const span = e.featured ? spanFor(e.w, e.h, 812) : spanFor(e.w, e.h);
+      const src = e.featured ? e.full : e.thumb;
+      const lazy = e.featured ? 'fetchpriority="high"' : 'loading="lazy"';
       return `          <a class="${cls}" href="../${e.full}" style="grid-row: span ${span};" data-w="${e.w}" data-h="${e.h}">
-            <img src="../${e.thumb}" alt="${alt}" width="${e.w}" height="${e.h}" loading="lazy" decoding="async">
+            <img src="../${src}" alt="${alt}" width="${e.w}" height="${e.h}" ${lazy} decoding="async">
           </a>`;
     })
     .join("\n");
