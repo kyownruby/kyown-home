@@ -35,6 +35,47 @@
 - グリッドは**2カラムのまま変更しない**。カードが奇数枚になって最終行の右側が
   空いても、詰めたり全幅にしたりせず、そのままにする（次に追加したときに埋まるため）
 
+## gallery（キャラ別ギャラリー）
+
+トップの gallery セクション（4枚の16:9カード）と、キャラ別ページ
+（`gallery/kyown.html` / `mia.html` / `rain.html` / `shiori.html`）で構成。
+
+### 画像の置き場所
+
+```
+assets/gallery/
+├── kyown/
+│   ├── cover.webp        ← トップ表示用（16:9・幅1600px程度に軽量化）
+│   └── cover_full.png    ← キャラ別ページ用（元画像そのまま・無圧縮）
+├── mia/
+├── rain/
+└── shiori/   ※ 4フォルダとも同じ構成
+```
+
+現在はプレースホルダー画像が入っている。**同じファイル名で上書きするだけ**で差し替え完了。
+
+- `cover.webp` は元画像から**幅1600px程度**に縮小して生成する（トップの表示速度優先）。例：
+
+```bash
+python3 -c "
+from PIL import Image
+im = Image.open('元画像.png').convert('RGB')
+w, h = im.size
+im.resize((1600, round(h*1600/w)), Image.LANCZOS).save('site/assets/gallery/kyown/cover.webp', 'WEBP', quality=80)
+"
+```
+
+- `cover_full.png` は元画像をそのまま配置する（圧縮しない）
+- 表示枠は両方とも 16:9 固定（`object-fit: cover`）なので、比率の違う画像でもレイアウトは崩れない
+
+### キャラ別ページに画像を追加するとき
+
+1. `assets/gallery/○○/` に画像ファイルを置く
+2. `gallery/○○.html` 内の `<a class="gallery-item">` の行をコピーして、
+   `href`（クリックで開く原寸画像）と `src`（一覧に表示する画像）を新しいファイル名に変えて1行足す
+
+ページ内にも同じ手順をコメントで書いてある。
+
 ## 画像
 
 ### キャラアイコン（反映済み）

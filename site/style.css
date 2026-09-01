@@ -282,10 +282,15 @@ body {
   grid-template-columns: repeat(2, 1fr);
 }
 
+.grid-gallery {
+  grid-template-columns: repeat(2, 1fr);  /* PCでは2×2 */
+}
+
 @media (max-width: 600px) {
   .grid-links,
   .grid-characters,
-  .grid-tools {
+  .grid-tools,
+  .grid-gallery {
     grid-template-columns: 1fr;  /* スマホ幅では1カラム */
   }
 }
@@ -386,6 +391,102 @@ body {
 .card-shiori .char-icon  { border-color: var(--shiori-ring); background: var(--shiori-ring); }
 .card-shiori .card-title { color: var(--shiori-title); justify-content: center; }
 .card-shiori .card-sub   { color: var(--shiori-sub); }
+
+/* ---------- Gallery カード ---------- */
+
+/* 画像を縁いっぱいに敷くため、カード共通の padding を打ち消す */
+.card-gallery {
+  padding: 0;
+  overflow: hidden;
+}
+
+/* トップ用サムネは 16:9 固定。比率の違う画像でも枠は崩れない */
+.card-gallery img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.gallery-name {
+  display: block;
+  padding: 12px 16px;
+  text-align: center;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+/* キャラごとの配色（Characters カードと同じ変数を使う） */
+.card-gallery-kyown  { background: var(--kyown-bg); }
+.card-gallery-kyown .gallery-name  { color: var(--kyown-title); }
+
+.card-gallery-mia    { background: var(--mia-bg); }
+.card-gallery-mia .gallery-name    { color: var(--mia-title); }
+
+.card-gallery-rain   { background: var(--rain-bg); }
+.card-gallery-rain .gallery-name   { color: var(--rain-title); }
+
+.card-gallery-shiori { background: var(--shiori-bg); }
+.card-gallery-shiori .gallery-name { color: var(--shiori-title); }
+
+/* ---------- キャラ別ギャラリーページ（gallery/○○.html） ---------- */
+
+.gallery-header {
+  padding-bottom: 0;
+}
+
+.back-link {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  color: var(--text-soft);
+  text-decoration: none;
+}
+
+.back-link:hover {
+  color: var(--text);
+}
+
+.gallery-title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.6rem;
+  letter-spacing: 0.04em;
+  margin-top: 20px;
+}
+
+/* 画像リスト：1カラムのグリッド。画像が増えたら gap で縦に並んでいく */
+.gallery-list {
+  display: grid;
+  gap: 24px;
+}
+
+.gallery-item {
+  display: block;
+  border-radius: var(--radius);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+/* ページ内の画像も 16:9 固定で幅いっぱいに表示する */
+.gallery-item img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+/* ホバーで少し明るく（クリックで原寸が開くことのヒント） */
+@media (hover: hover) {
+  .gallery-item {
+    transition: filter 0.25s ease-out, box-shadow 0.25s ease-out;
+  }
+  .gallery-item:hover {
+    filter: brightness(1.08);
+    box-shadow: 0 0 20px 2px rgba(245, 199, 126, 0.16);
+  }
+}
 
 /* ---------- Tools カード（無彩色） ---------- */
 
