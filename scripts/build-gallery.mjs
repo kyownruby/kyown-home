@@ -96,9 +96,9 @@ async function processUploads() {
       date,
     };
     const idx = list.findIndex((e) => e.full === entry.full);
-    if (idx >= 0) list[idx] = entry;
+    if (idx >= 0) list[idx] = { ...list[idx], ...entry }; // featured などの手動フラグは保持
     else list.push(entry);
-    list.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0)); // 新しい順
+    sortEntries(list);
     fs.writeFileSync(jsonPath, JSON.stringify(list, null, 2) + "\n");
 
     // 処理が終わった画像は _upload から削除
@@ -106,6 +106,14 @@ async function processUploads() {
     added[char.slug]++;
   }
   return added;
+}
+
+// featured（メイン画像）を先頭に、あとは date の新しい順
+function sortEntries(list) {
+  list.sort((a, b) => {
+    if (!!b.featured - !!a.featured !== 0) return !!b.featured - !!a.featured;
+    return a.date < b.date ? 1 : a.date > b.date ? -1 : 0;
+  });
 }
 
 // ---------- 2. ギャラリーページの生成 ----------
@@ -133,7 +141,10 @@ function renderCards(list, charName) {
   return list
     .map((e) => {
       const alt = escapeHtml(`${charName}「${e.title}」`);
-      return `          <a class="gallery-item" href="../${e.full}" style="grid-row: span ${spanFor(e.w, e.h)};" data-w="${e.w}" data-h="${e.h}">
+      // featured はグリッド全幅で大きく表示するメイン画像（gallery.json で "featured": true を付ける）
+      const cls = e.featured ? "gallery-item gallery-item-featured" : "gallery-item";
+      const span = e.featured ? spanFor(e.w, e.h, 812) : spanFor(e.w, e.h);
+      return `          <a class="${cls}" href="../${e.full}" style="grid-row: span ${span};" data-w="${e.w}" data-h="${e.h}">
             <img src="../${e.thumb}" alt="${alt}" width="${e.w}" height="${e.h}" loading="lazy" decoding="async">
           </a>`;
     })
@@ -183,10 +194,9 @@ function renderPage(char, list) {
 
   <div class="page">
 
-    <!-- ヘッダー：トップへ戻る＋キャラ名の見出し -->
+    <!-- ヘッダー：トップへ戻るリンクのみ（見出しは置かない） -->
     <header class="section gallery-header">
       <a class="back-link" href="../index.html">← トップへ戻る</a>
-      <h1 class="gallery-title">${char.name}</h1>
     </header>
 
     <main>
@@ -212,6 +222,7 @@ ${grid}
 function buildPages() {
   for (const char of CHARS) {
     const list = loadJson(path.join(GALLERY_ASSETS, char.slug, "gallery.json"));
+    sortEntries(list); // 手動で featured を付け外しした場合もここで並び直す
     fs.writeFileSync(path.join(PAGES_DIR, `${char.slug}.html`), renderPage(char, list));
   }
 }

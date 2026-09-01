@@ -427,14 +427,6 @@ body {
   color: var(--text);
 }
 
-.gallery-title {
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 1.6rem;
-  letter-spacing: 0.04em;
-  margin-top: 20px;
-}
-
 .gallery-section {
   padding-top: 32px;
 }
@@ -455,6 +447,11 @@ body {
   border-radius: var(--radius);
   background: var(--surface);
   overflow: hidden;
+}
+
+/* メイン画像（gallery.json で "featured": true）はグリッド全幅で大きく表示 */
+.gallery-item-featured {
+  grid-column: 1 / -1;
 }
 
 /* 縦横比は width/height 属性から決まる（読み込み前でも高さが確定して飛ばない） */
