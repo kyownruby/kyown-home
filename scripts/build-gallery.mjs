@@ -6,11 +6,13 @@
 //   2. リポジトリのルートで `npm run gallery` を実行
 //
 // やること：
-//   - _upload の画像をプレフィックスでキャラフォルダへ振り分け（原寸は無圧縮コピー）
-//   - 幅800pxのWebPサムネイルを thumb/ に生成
+//   - _upload の画像をプレフィックスでキャラフォルダへ振り分け（原寸を無圧縮コピー）
 //   - 各キャラフォルダの gallery.json を追記型で更新（date の新しい順）
 //   - gallery.json をもとに site/gallery/○○.html（メイソンリー表示）を再生成
 //   - 処理済みの画像は _upload から削除（プレフィックス不一致は警告して残す）
+//
+// 画質ポリシー（ご主人指定）：表示にはすべて原寸ファイルをそのまま使う。
+// 縮小サムネの生成・lossy再エンコード・拡大表示はしない（画質＞ページの軽さ）
 
 import fs from "node:fs";
 import path from "node:path";
@@ -31,7 +33,6 @@ const CHARS = [
 ];
 
 const IMAGE_EXTS = new Set([".png", ".jpg", ".jpeg", ".webp", ".gif", ".avif"]);
-const THUMB_WIDTH = 800;
 
 // ---------- 1. _upload の走査と振り分け ----------
 
@@ -64,23 +65,15 @@ async function processUploads() {
 
     const srcPath = path.join(UPLOAD_DIR, file);
     const charDir = path.join(GALLERY_ASSETS, char.slug);
-    const thumbDir = path.join(charDir, "thumb");
-    fs.mkdirSync(thumbDir, { recursive: true });
+    fs.mkdirSync(charDir, { recursive: true });
 
     // 画像の実サイズを読み取る
     const meta = await sharp(srcPath).metadata();
     const w = meta.width;
     const h = meta.height;
 
-    // 原寸：無圧縮でそのままコピー（ライトボックス表示用）
+    // 原寸を無圧縮でそのままコピー（一覧・ライトボックスともこのファイルを表示する）
     fs.copyFileSync(srcPath, path.join(charDir, file));
-
-    // サムネイル：幅800pxのWebP（元がそれより小さければ拡大しない）
-    const thumbName = path.basename(file, ext) + ".webp";
-    await sharp(srcPath)
-      .resize({ width: THUMB_WIDTH, withoutEnlargement: true })
-      .webp({ quality: 82 })
-      .toFile(path.join(thumbDir, thumbName));
 
     // gallery.json を追記型で更新（同名ファイルの再アップは上書き）
     const jsonPath = path.join(charDir, "gallery.json");
@@ -89,7 +82,6 @@ async function processUploads() {
     const date = fs.statSync(srcPath).mtime.toISOString().slice(0, 10);
     const entry = {
       full: `assets/gallery/${char.slug}/${file}`,
-      thumb: `assets/gallery/${char.slug}/thumb/${thumbName}`,
       title,
       w,
       h,
@@ -142,13 +134,12 @@ function renderCards(list, charName) {
     .map((e) => {
       const alt = escapeHtml(`${charName}「${e.title}」`);
       // featured はグリッド全幅で大きく表示するメイン画像（gallery.json で "featured": true を付ける）。
-      // 画質を落とさないよう、サムネではなく原寸ファイルをそのまま表示する（ページ先頭なので lazy も付けない）
+      // 画質を落とさないよう、一覧もライトボックスもすべて原寸ファイルをそのまま表示する
       const cls = e.featured ? "gallery-item gallery-item-featured" : "gallery-item";
       const span = e.featured ? spanFor(e.w, e.h, 812) : spanFor(e.w, e.h);
-      const src = e.featured ? e.full : e.thumb;
       const lazy = e.featured ? 'fetchpriority="high"' : 'loading="lazy"';
       return `          <a class="${cls}" href="../${e.full}" style="grid-row: span ${span};" data-w="${e.w}" data-h="${e.h}">
-            <img src="../${src}" alt="${alt}" width="${e.w}" height="${e.h}" ${lazy} decoding="async">
+            <img src="../${e.full}" alt="${alt}" width="${e.w}" height="${e.h}" ${lazy} decoding="async">
           </a>`;
     })
     .join("\n");
